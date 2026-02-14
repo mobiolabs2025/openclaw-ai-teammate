@@ -1,6 +1,19 @@
-# OpenClaw AI Teammate Skill
+<p align="center">
+  <img src="https://agent.mobiolabs.net/logo.svg" width="80" height="80" alt="AI Teammate Logo">
+</p>
 
-Connect [AI Teammate](https://agent.mobiolabs.net) to your OpenClaw instance.
+<h1 align="center">OpenClaw AI Teammate Skill</h1>
+
+<p align="center">
+  Connect <a href="https://agent.mobiolabs.net">AI Teammate</a> to your OpenClaw instance.
+</p>
+
+<p align="center">
+  <a href="https://agent.mobiolabs.net"><img src="https://img.shields.io/badge/AI%20Teammate-Live-3b82f6?style=flat-square" alt="AI Teammate"></a>
+  <a href="https://github.com/mobiolabs2025/openclaw-ai-teammate/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License"></a>
+</p>
+
+---
 
 Manage AI agents, chat with them, and view statistics - all from your terminal.
 
