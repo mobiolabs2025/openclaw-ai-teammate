@@ -1,159 +1,57 @@
-<p align="center">
-  <img src="https://agent.mobiolabs.net/logo.svg" width="80" height="80" alt="AI Teammate Logo">
-</p>
+# AI Teammate OpenClaw Skill
 
-<h1 align="center">OpenClaw AI Teammate Skill</h1>
+OpenClaw에서 AI Teammate 플랫폼을 제어하는 스킬입니다.
 
-<p align="center">
-  Connect <a href="https://agent.mobiolabs.net">AI Teammate</a> to your OpenClaw instance.
-</p>
+## 설치
 
-<p align="center">
-  <a href="https://agent.mobiolabs.net"><img src="https://img.shields.io/badge/AI%20Teammate-Live-3b82f6?style=flat-square" alt="AI Teammate"></a>
-  <a href="https://github.com/mobiolabs2025/openclaw-ai-teammate/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License"></a>
-</p>
-
----
-
-Manage AI agents, chat with them, and view statistics - all from your terminal.
-
-## Features
-
-- 🤖 **Agent Management** - Create, list, update, delete agents
-- 💬 **Direct Chat** - Talk to agents via CLI
-- 🧩 **Skills** - View available agent skills
-- 📊 **Analytics** - Monitor usage and performance
-
-## Quick Start
-
-### 1. Clone to your OpenClaw skills directory
-
+1. `.env.example`을 `.env`로 복사
+2. API 키 설정:
 ```bash
-cd ~/openclaw/skills
-git clone https://github.com/mobiolabs/openclaw-ai-teammate.git ai-teammate
+MOBIO_AGENT_URL=https://agent.mobiolabs.net
+MOBIO_AGENT_API_KEY=at_your_api_key_here
 ```
 
-### 2. Configure environment
+## 기능
+
+### 에이전트 관리
+- 에이전트 목록 조회
+- 에이전트 생성/삭제
+- 에이전트와 대화
+
+### 팀 관리
+- 팀 목록 조회
+- 팀 생성
+- 팀 멤버 관리
+- 팀 메모리 (RAG)
+
+### 스킬 관리
+- 플랫폼 스킬 목록 조회
+
+## 스크립트
+
+| 파일 | 설명 |
+|------|------|
+| `agents.sh` | 에이전트 CRUD |
+| `chat.sh` | 에이전트 채팅 |
+| `teams.sh` | 팀 관리 |
+| `skills.sh` | 스킬 목록 |
+
+## 사용 예시
 
 ```bash
-cd ai-teammate
-cp .env.example .env
-```
-
-Edit `.env` and add your API key:
-
-```bash
-AI_TEAMMATE_URL=https://agent.mobiolabs.net
-AI_TEAMMATE_API_KEY=your_api_key_here
-```
-
-> Get your API key from [AI Teammate Settings](https://agent.mobiolabs.net/settings/api)
-
-### 3. Test the connection
-
-```bash
-./agents.sh list
-```
-
-## Commands
-
-### Agent Management
-
-```bash
-# List all agents
+# 에이전트 목록
 ./agents.sh list
 
-# Get agent details
-./agents.sh get <agent_id>
+# 에이전트와 대화
+./chat.sh agent_123 "안녕하세요"
 
-# Create new agent
-./agents.sh create --name "My Agent" --personality friendly --skills core,search
+# 팀 생성
+./teams.sh create "개발팀" "개발 관련 지식 공유"
 
-# Delete agent
-./agents.sh delete <agent_id>
+# 팀 메모리 조회
+./teams.sh memories team_456
 ```
 
-### Chat
+## API 문서
 
-```bash
-# Send message to agent
-./chat.sh <agent_id> "Hello, how are you?"
-
-# Example
-./chat.sh agent_1 "Analyze Samsung Electronics stock"
-```
-
-### Skills
-
-```bash
-# List available skills
-./skills.sh list
-```
-
-### Admin
-
-```bash
-# View statistics
-./admin.sh stats
-
-# View recent logs
-./admin.sh logs
-
-# Health check
-./admin.sh health
-```
-
-## Example Usage with OpenClaw
-
-Once installed, you can ask your OpenClaw agent:
-
-```
-"Show my AI Teammate agents"
-→ Runs: ./agents.sh list
-
-"Create a new agent called Finance Helper"
-→ Runs: ./agents.sh create --name "Finance Helper"
-
-"Ask my Code Helper agent to review this function"
-→ Runs: ./chat.sh agent_2 "Please review this function..."
-```
-
-## API Reference
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/agents` | GET | List all agents |
-| `/api/agents/:id` | GET | Get agent details |
-| `/api/agents` | POST | Create agent |
-| `/api/agents/:id` | PUT | Update agent |
-| `/api/agents/:id` | DELETE | Delete agent |
-| `/api/chat` | POST | Send message |
-| `/api/skills` | GET | List skills |
-| `/api/admin/stats` | GET | Get statistics |
-
-## Environment Variables
-
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `AI_TEAMMATE_URL` | No | `https://agent.mobiolabs.net` | API base URL |
-| `AI_TEAMMATE_API_KEY` | Yes | - | Your API key |
-
-## Requirements
-
-- Bash 4.0+
-- curl
-- jq (optional, for pretty output)
-
-## License
-
-MIT License - see [LICENSE](LICENSE)
-
-## Links
-
-- [AI Teammate](https://agent.mobiolabs.net) - Build AI agents
-- [OpenClaw](https://openclaw.ai) - AI assistant framework
-- [Documentation](https://agent.mobiolabs.net/integrations/openclaw) - Integration guide
-
----
-
-Made with ❤️ by [Mobio Labs](https://mobiolabs.net)
+https://agent.mobiolabs.net/docs
