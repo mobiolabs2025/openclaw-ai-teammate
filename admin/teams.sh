@@ -164,6 +164,32 @@ case "$cmd" in
       -d "{\"name\":\"$name\"}" \
       "$API_URL/api/teams/$team_id/api-keys" | jq .
     ;;
+  chat)
+    team_id="$1"
+    message="$2"
+    mode="${3:-round-robin}"
+    agent_id="${4:-}"
+    if [ -z "$team_id" ] || [ -z "$message" ]; then
+      echo "Usage: $0 chat <team_id> <message> [mode] [agent_id]"
+      echo ""
+      echo "Modes:"
+      echo "  round-robin  - Sequential responses (default)"
+      echo "  parallel     - Independent responses"
+      echo "  debate       - Pro/Con debate"
+      echo "  brainstorm   - Ideas + voting"
+      echo "  expert       - Auto-select expert"
+      exit 1
+    fi
+    if [ -n "$agent_id" ]; then
+      curl -s -X POST -H "$AUTH_HEADER" -H "$CONTENT_TYPE" \
+        -d "{\"message\":\"$message\",\"mode\":\"$mode\",\"target_agent_id\":\"$agent_id\"}" \
+        "$API_URL/api/teams/$team_id/chat" | jq .
+    else
+      curl -s -X POST -H "$AUTH_HEADER" -H "$CONTENT_TYPE" \
+        -d "{\"message\":\"$message\",\"mode\":\"$mode\"}" \
+        "$API_URL/api/teams/$team_id/chat" | jq .
+    fi
+    ;;
   *)
     echo "AI Teammate Teams CLI"
     echo ""
@@ -194,5 +220,9 @@ case "$cmd" in
     echo "  integrations <id>             Get integrations info"
     echo "  api-keys <id>                 List API keys"
     echo "  create-api-key <id> [name]    Create API key"
+    echo ""
+    echo "Chat:"
+    echo "  chat <id> <msg> [mode] [aid]  Team discussion"
+    echo "    Modes: round-robin, parallel, debate, brainstorm, expert"
     ;;
 esac
