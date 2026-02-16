@@ -106,6 +106,27 @@ cd admin/
 ./teams.sh remove-agent <team_id> <agent_id>
 ```
 
+### Team Chat (Discussion Modes)
+
+```bash
+# Team discussion (auto mode - AI selects best mode)
+./teams.sh chat <team_id> "What should we prioritize this sprint?"
+
+# Specify mode
+./teams.sh chat <team_id> "Discuss pros and cons of microservices" debate
+
+# Available modes:
+#   auto         - AI selects best mode (default)
+#   round-robin  - Sequential responses, building on each other
+#   parallel     - Independent responses (no cross-influence)
+#   debate       - Pro/Con arguments + judgment
+#   brainstorm   - Ideas + voting for best
+#   expert       - Auto-select most qualified agent(s)
+
+# Ask specific agent
+./teams.sh chat <team_id> "Review this code" auto <agent_id>
+```
+
 ### Team Memory
 
 ```bash
