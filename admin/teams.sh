@@ -167,13 +167,14 @@ case "$cmd" in
   chat)
     team_id="$1"
     message="$2"
-    mode="${3:-round-robin}"
+    mode="${3:-auto}"
     agent_id="${4:-}"
     if [ -z "$team_id" ] || [ -z "$message" ]; then
       echo "Usage: $0 chat <team_id> <message> [mode] [agent_id]"
       echo ""
       echo "Modes:"
-      echo "  round-robin  - Sequential responses (default)"
+      echo "  auto         - AI selects best mode (default)"
+      echo "  round-robin  - Sequential responses"
       echo "  parallel     - Independent responses"
       echo "  debate       - Pro/Con debate"
       echo "  brainstorm   - Ideas + voting"
