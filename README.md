@@ -1,76 +1,165 @@
 <p align="center">
-  <img src="https://agent.mobiolabs.net/logo.svg" width="80" alt="AI Teammate Logo">
+  <img src="https://agent.mobiolabs.net/logo.svg" width="80" height="80" alt="AI Teammate Logo">
 </p>
 
-<h1 align="center">AI Teammate Skills for OpenClaw</h1>
+<h1 align="center">AI Teammate OpenClaw Skills</h1>
 
 <p align="center">
-  <a href="https://agent.mobiolabs.net">AI Teammate</a> •
-  <a href="https://openclaw.ai">OpenClaw</a> •
-  <a href="https://clawhub.com">ClawHub</a>
+  Control <a href="https://agent.mobiolabs.net">AI Teammate</a> platform from your OpenClaw instance.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/platform-AI%20Teammate-blue" alt="Platform">
-  <img src="https://img.shields.io/badge/openclaw-skill-green" alt="OpenClaw Skill">
-  <img src="https://img.shields.io/badge/license-MIT-orange" alt="License">
+  <a href="https://agent.mobiolabs.net"><img src="https://img.shields.io/badge/AI%20Teammate-Live-3b82f6?style=flat-square" alt="AI Teammate"></a>
+  <a href="https://openclaw.ai"><img src="https://img.shields.io/badge/OpenClaw-Skill-10b981?style=flat-square" alt="OpenClaw"></a>
+  <a href="https://github.com/mobiolabs2025/openclaw-ai-teammate/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License"></a>
 </p>
 
 ---
 
-## Skills
+Manage AI agents, teams, and memories — all from your terminal.
+
+## Available Skills
 
 | Skill | Description | Use Case |
 |-------|-------------|----------|
 | **[admin/](./admin/)** | Full management access | Platform owners, developers |
-| **[agent/](./agent/)** | Chat only (limited) | AI agents, bots |
+| **[agent/](./agent/)** | Chat only (limited) | AI agents, bots, safe API access |
 
-## Quick Start
+## Installation
 
-### 1. Get API Key
-
-1. Go to [AI Teammate](https://agent.mobiolabs.net)
-2. Create an account → Settings → API Keys
-3. Generate a new key (`at_...`)
-
-### 2. Setup
-
+1. Copy `.env.example` to `.env` (in the skill folder you want to use)
+2. Set your API key:
 ```bash
-export AI_TEAMMATE_API_KEY="at_your_key_here"
+MOBIO_AGENT_URL=https://agent.mobiolabs.net
+MOBIO_AGENT_API_KEY=at_your_api_key_here
 ```
 
-### 3. Use
+> Get your API key from AI Teammate website: Settings > API Keys
 
-**For Admins/Developers:**
+---
+
+## Admin Skill (`admin/`)
+
+Full access to agents, teams, members, and memories.
+
+### Agent Management
+
 ```bash
 cd admin/
+
+# List agents
 ./agents.sh list
-./chat.sh <agent_id> "Hello!"
+
+# Get agent details
+./agents.sh get <agent_id>
+
+# Create agent
+./agents.sh create "My Agent" "Description here"
+
+# Delete agent
+./agents.sh delete <agent_id>
 ```
 
-**For AI Agents (limited):**
+### Chat with Agents
+
+```bash
+./chat.sh <agent_id> "Hello, how are you?"
+```
+
+### Team Management
+
+```bash
+# List teams
+./teams.sh list
+
+# Get team details
+./teams.sh get <team_id>
+
+# Create team
+./teams.sh create "Dev Team" "Knowledge sharing for developers"
+
+# Delete team
+./teams.sh delete <team_id>
+```
+
+### Member Management
+
+```bash
+# List members
+./teams.sh members <team_id>
+
+# Invite by email (existing user → instant add, new user → sends invite email)
+./teams.sh invite <team_id> <email> [role]
+# role: member (default), admin
+```
+
+### Team Agent Management
+
+```bash
+# List team agents
+./teams.sh agents <team_id>
+
+# Add agent to team
+./teams.sh add-agent <team_id> <agent_id>
+
+# Remove agent from team
+./teams.sh remove-agent <team_id> <agent_id>
+```
+
+### Team Memory
+
+```bash
+# List team memories
+./teams.sh memories <team_id>
+
+# Add memory
+./teams.sh add-memory <team_id> "Content to remember"
+```
+
+### Team Integrations
+
+```bash
+# Get integrations (Telegram, Discord, API keys)
+./teams.sh integrations <team_id>
+
+# Get API keys
+./teams.sh api-keys <team_id>
+```
+
+### Admin Operations
+
+```bash
+# Platform stats (admin only)
+./admin.sh stats
+
+# List users (admin only)
+./admin.sh users
+```
+
+---
+
+## Agent Skill (`agent/`)
+
+**Limited access** — chat only, safe for AI-to-AI communication.
+
 ```bash
 cd agent/
-./chat.sh <agent_id> "Hello!"
+
+# Chat with an agent
+./chat.sh <agent_id> "What's on my schedule today?"
 ```
 
-## Skill Details
+### Permissions
 
-### Admin Skill (`admin/`)
+| Action | Admin | Agent |
+|--------|-------|-------|
+| Chat with agents | ✅ | ✅ |
+| Create/delete agents | ✅ | ❌ |
+| Team management | ✅ | ❌ |
+| View memories | ✅ | ❌ |
+| Admin operations | ✅ | ❌ |
 
-Full access to:
-- Agent CRUD (create, read, update, delete)
-- Team management
-- Member invitations
-- Memory management
-- Platform statistics
-
-### Agent Skill (`agent/`)
-
-Limited to:
-- Chat with agents only
-- No management operations
-- Safe for AI-to-AI communication
+---
 
 ## API Reference
 
@@ -78,13 +167,17 @@ Base URL: `https://agent.mobiolabs.net`
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/api/agents` | GET | List agents |
-| `/api/agents/{id}` | GET | Get agent |
+| `/api/agents` | GET | List your agents |
+| `/api/agents/{id}` | GET | Get agent details |
 | `/api/agents/{id}/chat` | POST | Chat with agent |
-| `/api/teams` | GET | List teams |
+| `/api/teams` | GET | List your teams |
+| `/api/teams/{id}` | GET | Get team details |
+| `/api/teams/{id}/memories` | GET | List team memories |
 
-Full docs: https://agent.mobiolabs.net/docs/api
+Full documentation: https://agent.mobiolabs.net/docs/api
+
+---
 
 ## License
 
-MIT
+MIT © [MobioLabs](https://mobiolabs.net)
