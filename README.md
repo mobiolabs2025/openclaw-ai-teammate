@@ -1,128 +1,143 @@
-# AI Teammate OpenClaw Skill
+<p align="center">
+  <img src="https://agent.mobiolabs.net/logo.svg" width="80" height="80" alt="AI Teammate Logo">
+</p>
 
-OpenClaw에서 [AI Teammate](https://agent.mobiolabs.net) 플랫폼을 제어하는 스킬입니다.
+<h1 align="center">AI Teammate OpenClaw Skill</h1>
 
-## 설치
+<p align="center">
+  Control <a href="https://agent.mobiolabs.net">AI Teammate</a> platform from your OpenClaw instance.
+</p>
 
-1. `.env.example`을 `.env`로 복사
-2. API 키 설정:
+<p align="center">
+  <a href="https://agent.mobiolabs.net"><img src="https://img.shields.io/badge/AI%20Teammate-Live-3b82f6?style=flat-square" alt="AI Teammate"></a>
+  <a href="https://github.com/mobiolabs2025/openclaw-ai-teammate/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License"></a>
+</p>
+
+---
+
+Manage AI agents, teams, and memories — all from your terminal.
+
+## Installation
+
+1. Copy `.env.example` to `.env`
+2. Set your API key:
 ```bash
 MOBIO_AGENT_URL=https://agent.mobiolabs.net
 MOBIO_AGENT_API_KEY=at_your_api_key_here
 ```
 
-> API 키는 AI Teammate 웹사이트 Settings > API Keys에서 생성할 수 있습니다.
+> Get your API key from AI Teammate website: Settings > API Keys
 
-## 스크립트
+## Scripts
 
-| 파일 | 설명 |
-|------|------|
-| `agents.sh` | 에이전트 CRUD |
-| `chat.sh` | 에이전트 채팅 |
-| `teams.sh` | 팀 관리 (멤버, 에이전트, 메모리, 연동) |
-| `skills.sh` | 스킬 목록 |
+| File | Description |
+|------|-------------|
+| `agents.sh` | Agent CRUD operations |
+| `chat.sh` | Chat with agents |
+| `teams.sh` | Team management (members, agents, memory, integrations) |
+| `skills.sh` | List available skills |
 
 ---
 
-## 에이전트 관리
+## Agent Management
 
 ```bash
-# 에이전트 목록
+# List agents
 ./agents.sh list
 
-# 에이전트 상세
+# Get agent details
 ./agents.sh get <agent_id>
 
-# 에이전트 생성
+# Create agent
 ./agents.sh create "My Agent" "Description here"
 
-# 에이전트 삭제
+# Delete agent
 ./agents.sh delete <agent_id>
 ```
 
-## 에이전트와 대화
+## Chat with Agents
 
 ```bash
-./chat.sh <agent_id> "안녕하세요"
+./chat.sh <agent_id> "Hello, how are you?"
 ```
 
 ---
 
-## 팀 관리
+## Team Management
 
-### 기본
+### Basics
 
 ```bash
-# 팀 목록
+# List teams
 ./teams.sh list
 
-# 팀 상세
+# Get team details
 ./teams.sh get <team_id>
 
-# 팀 생성
-./teams.sh create "개발팀" "개발 관련 지식 공유"
+# Create team
+./teams.sh create "Dev Team" "Knowledge sharing for developers"
 
-# 팀 삭제
+# Delete team
 ./teams.sh delete <team_id>
 ```
 
-### 멤버 관리
+### Member Management
 
 ```bash
-# 멤버 목록
+# List members
 ./teams.sh members <team_id>
 
-# 이메일로 초대 (가입 유저 → 바로 추가, 미가입 → 초대 이메일 발송)
+# Invite by email (existing user → instant add, new user → sends invite email)
 ./teams.sh invite <team_id> <email> [role]
-# role: member (기본), admin
+# role: member (default), admin
 ```
 
-### 에이전트 관리
+### Agent Management
 
 ```bash
-# 팀에 속한 에이전트 목록
+# List team agents
 ./teams.sh agents <team_id>
 
-# 에이전트를 팀에 추가
+# Add agent to team
 ./teams.sh add-agent <team_id> <agent_id>
 
-# 에이전트를 팀에서 제거
+# Remove agent from team
 ./teams.sh remove-agent <team_id> <agent_id>
 
-# 대표 에이전트 설정 (소셜 채널 기본 응답자)
+# Set default agent (responds to social channels)
 ./teams.sh set-default-agent <team_id> <agent_id>
 ```
 
-### 팀 메모리 (RAG)
+### Team Memory (RAG)
 
 ```bash
-# 메모리 목록
+# List memories
 ./teams.sh memories <team_id>
 
-# 메모리 추가 (자동 임베딩)
-./teams.sh add-memory <team_id> "저장할 내용" [category]
-# category: fact (기본), knowledge, resource, bookmark
+# Add memory (auto-embedded)
+./teams.sh add-memory <team_id> "Content to save" [category]
+# category: fact (default), knowledge, resource, bookmark
 
-# 메모리 삭제
+# Delete memory
 ./teams.sh delete-memory <team_id> <memory_id>
 ```
 
-### 연동 & API
+### Integrations & API
 
 ```bash
-# 연동 정보 (Telegram, Discord 등)
+# View integrations (Telegram, Discord, etc.)
 ./teams.sh integrations <team_id>
 
-# API 키 목록
+# List API keys
 ./teams.sh api-keys <team_id>
 
-# API 키 생성
+# Create API key
 ./teams.sh create-api-key <team_id> "Key Name"
 ```
 
 ---
 
-## 스킬 목록
+## Skills
 
 ```bash
 ./skills.sh list
@@ -130,59 +145,59 @@ MOBIO_AGENT_API_KEY=at_your_api_key_here
 
 ---
 
-## API 엔드포인트
+## API Endpoints
 
 ### Agents
-| Method | Endpoint | 설명 |
-|--------|----------|------|
-| GET | `/api/agents` | 에이전트 목록 |
-| GET | `/api/agents/:id` | 에이전트 상세 |
-| POST | `/api/agents` | 에이전트 생성 |
-| PUT | `/api/agents/:id` | 에이전트 수정 |
-| DELETE | `/api/agents/:id` | 에이전트 삭제 |
-| POST | `/api/agents/:id/chat` | 에이전트와 대화 |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/agents` | List agents |
+| GET | `/api/agents/:id` | Get agent |
+| POST | `/api/agents` | Create agent |
+| PUT | `/api/agents/:id` | Update agent |
+| DELETE | `/api/agents/:id` | Delete agent |
+| POST | `/api/agents/:id/chat` | Chat with agent |
 
 ### Teams
-| Method | Endpoint | 설명 |
-|--------|----------|------|
-| GET | `/api/teams` | 팀 목록 |
-| GET | `/api/teams/:id` | 팀 상세 |
-| POST | `/api/teams` | 팀 생성 |
-| DELETE | `/api/teams/:id` | 팀 삭제 |
-| GET | `/api/teams/:id/members` | 멤버 목록 |
-| POST | `/api/teams/:id/members` | 멤버 초대 |
-| GET | `/api/teams/:id/agents` | 팀 에이전트 목록 |
-| POST | `/api/teams/:id/agents/:aid` | 에이전트 추가 |
-| DELETE | `/api/teams/:id/agents/:aid` | 에이전트 제거 |
-| PUT | `/api/teams/:id/default-agent` | 대표 에이전트 설정 |
-| GET | `/api/teams/:id/memories` | 메모리 목록 |
-| POST | `/api/teams/:id/memories` | 메모리 추가 |
-| PUT | `/api/teams/:id/memories/:mid` | 메모리 수정 |
-| DELETE | `/api/teams/:id/memories/:mid` | 메모리 삭제 |
-| GET | `/api/teams/:id/integrations` | 연동 정보 |
-| GET | `/api/teams/:id/api-keys` | API 키 목록 |
-| POST | `/api/teams/:id/api-keys` | API 키 생성 |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/teams` | List teams |
+| GET | `/api/teams/:id` | Get team |
+| POST | `/api/teams` | Create team |
+| DELETE | `/api/teams/:id` | Delete team |
+| GET | `/api/teams/:id/members` | List members |
+| POST | `/api/teams/:id/members` | Invite member |
+| GET | `/api/teams/:id/agents` | List team agents |
+| POST | `/api/teams/:id/agents/:aid` | Add agent |
+| DELETE | `/api/teams/:id/agents/:aid` | Remove agent |
+| PUT | `/api/teams/:id/default-agent` | Set default agent |
+| GET | `/api/teams/:id/memories` | List memories |
+| POST | `/api/teams/:id/memories` | Add memory |
+| PUT | `/api/teams/:id/memories/:mid` | Update memory |
+| DELETE | `/api/teams/:id/memories/:mid` | Delete memory |
+| GET | `/api/teams/:id/integrations` | Get integrations |
+| GET | `/api/teams/:id/api-keys` | List API keys |
+| POST | `/api/teams/:id/api-keys` | Create API key |
 
 ### Skills
-| Method | Endpoint | 설명 |
-|--------|----------|------|
-| GET | `/api/skills` | 스킬 목록 |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/skills` | List skills |
 
 ---
 
-## 권한
+## Permissions
 
-API 키는 **해당 사용자 계정**에 연결됩니다:
-- 자신의 에이전트만 제어 가능
-- 자신이 멤버인 팀만 접근 가능
-- 팀 내 역할에 따른 권한:
-  - **owner**: 팀 삭제, 모든 관리
-  - **admin**: 멤버 초대, 에이전트 관리
-  - **member**: 조회, 메모리 추가
+API keys are tied to **your user account**:
+- You can only control your own agents
+- You can only access teams you're a member of
+- Team roles determine access:
+  - **owner**: Delete team, full management
+  - **admin**: Invite members, manage agents
+  - **member**: View, add memories
 
 ---
 
-## 링크
+## Links
 
 - **AI Teammate**: https://agent.mobiolabs.net
-- **API 문서**: https://agent.mobiolabs.net/docs
+- **API Docs**: https://agent.mobiolabs.net/docs
