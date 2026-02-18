@@ -182,6 +182,26 @@ cd agent/
 
 ---
 
+## Agent Skills (Platform-side)
+
+When chatting with agents, they can use these built-in skills if enabled:
+
+| Skill | Description |
+|-------|-------------|
+| `weather` | Current weather and forecasts |
+| `translate` | Text translation (Google Translate) |
+| `summarize` | Summarize text or URLs |
+| `naver_search` | Korean news/blog search |
+| `tavily` | Global web search |
+| `rainbowstock` | Korean stock analysis |
+| `global_assets` | 🆕 Commodities, currencies, market indicators (gold, USD/KRW, VIX, BTC) |
+| `bookmark` | Save and manage bookmarks |
+| `education` | Flashcards and study notes |
+
+Enable skills per-agent via the platform Settings or API.
+
+---
+
 ## API Reference
 
 Base URL: `https://agent.mobiolabs.net`
