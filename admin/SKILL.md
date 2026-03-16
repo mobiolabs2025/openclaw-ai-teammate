@@ -9,6 +9,8 @@ Set your API key:
 export AI_TEAMMATE_API_KEY="at_your_key_here"
 ```
 
+Get your key at: https://ai-teammate.net/settings
+
 ## Commands
 
 ### Agents
@@ -44,8 +46,23 @@ export AI_TEAMMATE_API_KEY="at_your_key_here"
 ./admin.sh users                   # List users
 ```
 
+### OpenClaw Integration
+```bash
+./tools.sh                         # Get tool definitions for OpenClaw
+```
+
+## API Endpoints
+
+- **Tools**: `https://ai-teammate.net/api/openclaw/tools`
+- **Info**: `https://ai-teammate.net/api/openclaw/info`
+- **Skill Download**: `https://ai-teammate.net/api/openclaw/skill.zip`
+
 ## Permissions
 
 This skill requires **admin API key** with full access.
 
 ⚠️ For agents/bots, use the `agent/` skill instead (chat only).
+
+## Version
+
+- v1.1.0 (2026-03-17) - Added OpenClaw API endpoints
